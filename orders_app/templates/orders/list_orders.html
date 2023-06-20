@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+
+            <div class="collapse navbar-collapse" id="navbarButtonsExample">
+
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <p style="font-family: var(--bs-font-monospace); font-size: 30px; font-weight: bolder;">
+                            {% if role == 'client' or role == 'master' %}Мои заявки{% else %}Все заявки{% endif %}</p>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    {% if role == 'client' %}
+                        <a href=""
+                           class="btn btn-primary me-4 p-2">Создать Заявку</a>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="row d-flex justify-content-center align-items-center h-100 mt-3">
+        <div class="col-lg-12 col-xl-12">
+            <div class="card text-black" style="border-radius: 25px;">
+
+                <div class="card-body p-md-5">
+                    <div class="row justify-content-center">
+
+                        <table class="table table-striped align-middle mb-0 bg-white">
+                            <thead class="bg-light">
+                            <tr>
+                                <th>Клиент</th>
+                                <th>Описание</th>
+                                <th>Мастер</th>
+                                <th>Статус</th>
+                                <th>Дата</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for row in object_list %}
+                                <tr>
+                                    <td>
+                                        {{ row.client }}
+                                    </td>
+                                    <td>
+                                        {{ row.title }}
+                                    </td>
+                                    <td>
+                                        {{ row.master }}
+                                    </td>
+                                    <td>
+                                        {{ row.status }}
+                                    </td>
+                                    <td>
+                                        {{ row.created_at }}
+                                    </td>
+                                    <td>
+                                        {% if role != 'master' %}
+                                        <a href="#staticBackdrop" data-bs-toggle="modal"
+                                           class="btn btn-danger btn-xs m-1">Удалить</a>
+                                        {% endif %}
+
+                                        <!-- Модальное окно -->
+                                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
+                                             data-bs-keyboard="false" tabindex="-1"
+                                             aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="staticBackdropLabel1">
+                                                            Подтверждение</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Закрыть"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Действительно хотите удалить заявку?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">Отмена
+                                                        </button>
+                                                        <a href=""
+                                                           type="button" class="btn btn-primary">Удалить</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
