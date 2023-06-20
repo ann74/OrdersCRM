@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="container text-center mt-5 col-4">
+        <form method="post">
+            <h1 class="h3 mb-3 fw-normal">Авторизуйтесь</h1>
+            {% if form.errors %}
+                <p>{{ form.non_field_errors }}</p>
+            {% endif %}
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="">
+                    <label class="form-label" for="{{ field.auto_id }}">{{ field.label }}</label>
+                    {% if field.name == 'password' %}
+                        <input type="password" id="{{ field.auto_id }}" class="form-control" name="{{ field.name }}">
+                    {% else %}
+                        <input type="text" id="{{ field.auto_id }}" class="form-control" name="{{ field.name }}">
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <button type="submit" class="w-100 btn btn-lg btn-primary mt-3 mb-2">Войти</button>
+            <a class="" href="">Регистрация</a>
+
+        </form>
+    </div>
+
+{% endblock %}
