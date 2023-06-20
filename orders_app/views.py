@@ -3,7 +3,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import ListView, CreateView, DetailView, UpdateView, FormView
+from django.views.generic import ListView, CreateView, DetailView, UpdateView
 
 from orders_app.forms import CreateOrderForm, TargetEmployerForm
 from orders_app.models import Orders

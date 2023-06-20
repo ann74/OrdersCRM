@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import User
 
 from orders_app.models import Orders
 from users_app.forms import StyleFormMixin

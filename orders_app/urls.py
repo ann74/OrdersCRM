@@ -1,10 +1,9 @@
-from django.urls import path, include
+from django.urls import path
 
 from orders_app.apps import OrdersAppConfig
 from orders_app.views import OrdersListView, AddOrderView, DetailOrderView, DeleteOrderView, UpdateOrderView,\
     TargetEmployer
 
-# from users_app.views import UserRegister
 
 app_name = OrdersAppConfig.name
 

@@ -51,5 +51,3 @@ class UserRegisterForm(StyleFormMixin, UserCreationForm):
         if commit:
             user.save()
         return user
-
-

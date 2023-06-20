@@ -30,7 +30,8 @@ class Orders(models.Model):
     )
 
     client = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='клиент', related_name='client')
-    master = models.ForeignKey(User, on_delete=models.SET_NULL, verbose_name='мастер', **NULLABLE, related_name='master')
+    master = models.ForeignKey(User, on_delete=models.SET_NULL, verbose_name='мастер', **NULLABLE,
+                               related_name='master')
     title = models.CharField(max_length=250, verbose_name='Краткое описание')
     category = models.ForeignKey(Category, default='Другое', on_delete=models.SET_DEFAULT, verbose_name='Категория')
     description = models.TextField(verbose_name='Подробное описание', **NULLABLE)
@@ -45,4 +46,3 @@ class Orders(models.Model):
 
     def __str__(self):
         return f'{self.title}'
-
