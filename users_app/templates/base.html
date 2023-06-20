@@ -16,7 +16,7 @@
 <div class="container">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="" class="nav-link px-2 link-dark">Система учета заявок</a></li>
+            <li><a href="{% url 'orders:list' %}" class="nav-link px-2 link-dark">Система учета заявок</a></li>
         </ul>
             <a href="#" class="nav-link px-2 link-secondary">{{ user }}</a>
         {% if user.is_superuser %}
@@ -26,11 +26,11 @@
 
         <div class="col-md-3 text-end">
             {% if user.is_authenticated %}
-                <a class="btn btn-outline-primary me-2" href="{% url 'users:logout' %}">Выйти</a>
+                <a class="btn btn-outline-secondary me-2" href="{% url 'users:logout' %}">Выйти</a>
             {% else %}
-                <a class="btn btn-outline-primary me-2" href="{% url 'users:login' %}">Войти</a>
+                <a class="btn btn-outline-secondary me-2" href="{% url 'users:login' %}">Войти</a>
             {% endif %}
-            <a class="btn btn-primary" href="{% url 'users:register' %}">Регистрация</a>
+            <a class="btn btn-light" href="{% url 'users:register' %}">Регистрация</a>
         </div>
     </header>
 

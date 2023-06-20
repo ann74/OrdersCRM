@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="vh-100" style="background-color: #eee;">
+    <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-50">
+            <div class="col-lg-12 col-xl-11">
+                <div class="card text-black" style="border-radius: 25px;">
+                    <div class="card-body p-md-5">
+                        <div class="row justify-content-center">
+                            <div class="col-md-12 col-lg-12">
+
+                                {% if object %}
+                                    <p class="text-center h3 fw-bold mb-5 mx-1 mx-md-4 mt-4">
+                                        {{ object.title }}</p>
+                                    <hr>
+                                    <p class="text h5">
+                                        {{ object.description }}</p>
+                                    <br>
+
+                                {% endif %}
+
+                                <hr>
+                                <a class="btn btn-outline-primary w-25"
+                                       href="{% url 'orders:list' %}">Назад</a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

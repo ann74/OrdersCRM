@@ -16,8 +16,8 @@
                 </ul>
                 <div class="d-flex align-items-center">
                     {% if role == 'client' %}
-                        <a href=""
-                           class="btn btn-primary me-4 p-2">Создать Заявку</a>
+                        <a href="{% url 'orders:add' %}"
+                           class="btn btn-light me-4 p-2">Создать Заявку</a>
                     {% endif %}
 
                 </div>
@@ -49,10 +49,18 @@
                                         {{ row.client }}
                                     </td>
                                     <td>
-                                        {{ row.title }}
+                                        <a href="{% url 'orders:detail' row.pk %}">{{ row.title }}</a>
                                     </td>
                                     <td>
-                                        {{ row.master }}
+                                        {% if row.master %}
+                                            {{ row.master }}
+                                        {% else %}
+                                            {% if role == 'dispatcher' %}
+                                                <a href="{% url 'orders:employer' row.pk %}">Назначить исполнителя</a>
+                                            {% else %}
+                                                -
+                                            {% endif %}
+                                        {% endif %}
                                     </td>
                                     <td>
                                         {{ row.status }}
@@ -62,8 +70,10 @@
                                     </td>
                                     <td>
                                         {% if role != 'master' %}
-                                        <a href="#staticBackdrop" data-bs-toggle="modal"
-                                           class="btn btn-danger btn-xs m-1">Удалить</a>
+                                            <a href="{% url 'orders:update' row.pk %}"
+                                               class="btn btn-secondary btn-xs m-1">Изменить</a>
+                                            <a href="#staticBackdrop" data-bs-toggle="modal"
+                                               class="btn btn-danger btn-xs m-1">Удалить</a>
                                         {% endif %}
 
                                         <!-- Модальное окно -->
@@ -85,7 +95,7 @@
                                                         <button type="button" class="btn btn-secondary"
                                                                 data-bs-dismiss="modal">Отмена
                                                         </button>
-                                                        <a href=""
+                                                        <a href="{% url 'orders:delete' row.pk %}"
                                                            type="button" class="btn btn-primary">Удалить</a>
                                                     </div>
                                                 </div>
