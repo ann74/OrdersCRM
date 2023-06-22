@@ -7,31 +7,31 @@ from django.views.generic import ListView, CreateView, DetailView, UpdateView
 
 from orders_app.forms import CreateOrderForm, TargetEmployerForm
 from orders_app.models import Orders
+from orders_app.templates.orders.services import get_user_role
 
 
 class OrdersListView(LoginRequiredMixin, ListView):
     login_url = 'users:login'
     template_name = 'orders/list_orders.html'
+    model = Orders
 
     def get_queryset(self):
-        print(self.request.user.groups.first())
-        if self.request.user.groups.first().name == 'clients':
-            queryset = Orders.objects.filter(client=self.request.user)
-        elif self.request.user.groups.first().name == 'masters':
-            queryset = Orders.objects.filter(master=self.request.user)
+        queryset = super().get_queryset()
+        query_string = self.request.GET.get('search')
+        if query_string:
+            queryset = queryset.filter(title__icontains=query_string)
+        role = get_user_role(self.request)
+        if role == 'client':
+            queryset = queryset.filter(client=self.request.user)
         else:
-            queryset = Orders.objects.all()
+            queryset = queryset.exclude(status='завершена')
+            if role == 'master':
+                queryset = queryset.filter(master=self.request.user)
         return queryset
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data()
-        print(self.request.user.groups.first())
-        if self.request.user.groups.first().name == 'clients':
-            context_data['role'] = 'client'
-        elif self.request.user.groups.first().name == 'masters':
-            context_data['role'] = 'master'
-        else:
-            context_data['role'] = 'dispatcher'
+        context_data['role'] = get_user_role(self.request)
         return context_data
 
 
@@ -54,6 +54,11 @@ class AddOrderView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
 class DetailOrderView(LoginRequiredMixin, DetailView):
     template_name = 'orders/order_detail.html'
     model = Orders
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data()
+        context_data['role'] = get_user_role(self.request)
+        return context_data
 
 
 class DeleteOrderView(SuccessMessageMixin, View):

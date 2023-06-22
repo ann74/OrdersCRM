@@ -66,14 +66,15 @@
                                         {{ row.status }}
                                     </td>
                                     <td>
-                                        {{ row.created_at }}
+                                        {{ row.created_at.date }}
                                     </td>
                                     <td>
                                         {% if role != 'master' %}
+
                                             <a href="{% url 'orders:update' row.pk %}"
-                                               class="btn btn-secondary btn-xs m-1">Изменить</a>
+                                               class="btn btn-secondary btn-sm m-1 float-end">Изменить</a>
                                             <a href="#staticBackdrop" data-bs-toggle="modal"
-                                               class="btn btn-danger btn-xs m-1">Удалить</a>
+                                               class="btn btn-danger btn-sm m-1 float-end">Удалить</a>
                                         {% endif %}
 
                                         <!-- Модальное окно -->

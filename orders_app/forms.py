@@ -9,16 +9,20 @@ class CreateOrderForm(StyleFormMixin, forms.ModelForm):
 
     class Meta:
         model = Orders
-        fields = ('title', 'category', 'description')
+        fields = ('title', 'category', 'description', 'full_name', 'phone', 'address')
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': 'Краткое описание'}),
             'description': forms.Textarea(
                 attrs={'placeholder': 'Подробное описание'}),
+            'full_name': forms.TextInput(attrs={'placeholder': 'Укажите свои данные'}),
+            'phone': forms.TextInput(attrs={'placeholder': '+71234567890'}),
+            'address': forms.TextInput(attrs={'placeholder': 'Укажите свой адрес'}),
         }
         labels = {
             'title': 'Что случилось?',
             'description': 'Описание проблемы',
         }
+
 
 
 class TargetEmployerForm(StyleFormMixin, forms.ModelForm):

@@ -9,3 +9,4 @@ deploy/.cache/
 **/logs
 postgres_data
 .env
+*.sql
