@@ -37,22 +37,21 @@ class OrdersListView(LoginRequiredMixin, ListView):
         return context_data
 
 
-class HystoryOrdersListView(LoginRequiredMixin, ListView):
+class HistoryOrdersListView(LoginRequiredMixin, ListView):
     template_name = 'orders/history_orders.html'
     model = Orders
 
     def get_queryset(self):
         queryset = super().get_queryset()
+        queryset = queryset.filter(status='завершена')
         query_string = self.request.GET.get('search')
         if query_string:
             queryset = queryset.filter(title__icontains=query_string)
         role = get_user_role(self.request)
         if role == 'client':
             queryset = queryset.filter(client=self.request.user)
-        else:
-            queryset = queryset.exclude(status='завершена')
-            if role == 'master':
-                queryset = queryset.filter(master=self.request.user)
+        elif role == 'master':
+            queryset = queryset.filter(master=self.request.user)
         return queryset
 
     def get_context_data(self, **kwargs):

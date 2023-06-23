@@ -11,16 +11,23 @@
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
                         <p style="font-family: var(--bs-font-monospace); font-size: 30px; font-weight: bolder;">
-                            {% if role == 'client' or role == 'master' %}Мои заявки{% else %}Все заявки{% endif %}</p>
+                            {% if role == 'client' or role == 'master' %}
+                                Мои заявки
+                            {% else %}
+                                Активные заявки
+                            {% endif %}</p>
                     </li>
                 </ul>
+                <form action="{% url 'orders:list' %}" method="get">
+                    <input name="search" type="text" placeholder="Найти заявку..." class="form-control">
+                </form>
                 <div class="d-flex align-items-center">
                     {% if role == 'client' %}
                         <a href="{% url 'orders:add' %}"
-                           class="btn btn-light me-4 p-2">Создать Заявку</a>
+                           class="btn btn-light mx-4 p-2">Создать Заявку</a>
                     {% else %}
-                        <a href=""
-                           class="btn btn-light me-4 p-2">История заявок</a>
+                        <a href="{% url 'orders:history' %}"
+                           class="btn btn-light mx-4 p-2">История заявок</a>
                     {% endif %}
 
                 </div>
@@ -72,7 +79,7 @@
                                         {{ row.created_at.date }}
                                     </td>
                                     <td>
-                                        {% if role != 'master' and row.status in 'новая,назначена'%}
+                                        {% if role != 'master' and row.status in 'новая,назначена' %}
 
                                             <a href="{% url 'orders:update' row.pk %}"
                                                class="btn btn-secondary btn-sm m-1 float-end">Изменить</a>
