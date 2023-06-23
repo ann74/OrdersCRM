@@ -24,10 +24,15 @@ class CreateOrderForm(StyleFormMixin, forms.ModelForm):
         }
 
 
+class MyDateInput(forms.DateInput):
+    input_type = 'date'
+    format = '%Y-%m-%d'
+
 
 class TargetEmployerForm(StyleFormMixin, forms.ModelForm):
-    master = forms.ModelChoiceField(queryset=User.objects.filter(groups__name='masters'))
+    master = forms.ModelChoiceField(queryset=User.objects.filter(groups__name='masters'), label='Мастер')
+    date_execution = forms.DateField(label='Срок выполнения', required=True, widget=MyDateInput())
 
     class Meta:
         model = Orders
-        fields = ('master',)
+        fields = ('master', 'date_execution')

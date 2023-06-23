@@ -28,7 +28,11 @@
                                                 {% if object.date_execution %}
                                                     {{ object.date_execution }}
                                                 {% else %}
-                                                    Не назначена
+                                                    Не назначен
+                                                {% endif %}</li>
+                                            <li class="list-group-item"><b>Мастер:</b>
+                                                {% if object.master %}
+                                                    {{ object.master }}
                                                 {% endif %}</li>
                                             <li class="list-group-item"><b>Выполнено:</b>
                                                 {% if object.date_completed %}
@@ -44,8 +48,40 @@
                                        href="{% url 'orders:list' %}">Назад</a>
                                     {% if object.status == 'выполнена' and role == 'client' %}
                                         <a class="btn btn-outline-secondary float-end"
-                                           href="">Подтвердить выполнение</a>
+                                           href="{% url 'orders:finish' object.pk %}">Подтвердить выполнение</a>
+                                    {% elif object.status in 'новая,назначена' and role == 'dispatcher' %}
+                                        <a class="btn btn-outline-secondary float-end"
+                                           href="{% url 'orders:employer' object.pk %}">Назначить исполнителя</a>
+                                    {% elif object.status == 'назначена' and role == 'master' %}
+                                        <a href="#staticBackdrop" data-bs-toggle="modal"
+                                           class="btn btn-outline-secondary float-end">Отметить выполнение</a>
                                     {% endif %}
+
+                                    <!-- Модальное окно -->
+                                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
+                                             data-bs-keyboard="false" tabindex="-1"
+                                             aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="staticBackdropLabel1">
+                                                            Подтверждение</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Закрыть"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Действительно заявка выполнена?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">Отмена
+                                                        </button>
+                                                        <a href="{% url 'orders:complete' object.pk %}"
+                                                           type="button" class="btn btn-primary">Да, выполнена</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
                                 </div>
                             </div>
